@@ -1,0 +1,18 @@
+version: '3'
+services:
+  cpu:
+    image: webzak/runpod:cpu
+    build:
+      context: ..
+    container_name: cpubase
+    restart: always
+    ports:
+      - "2122:22"
+    environment:
+      - PUBLIC_KEY=${PUBLIC_KEY}
+    volumes:
+       - "${WORKSPACE_DIR}:/workspace"
+    networks:
+      cpu:
+networks:
+  cpu:
