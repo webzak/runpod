@@ -1,0 +1,27 @@
+services:
+  gpu:
+    image: webzak/runpod:gpu
+    build:
+      context: ..
+    container_name: gpubase
+    restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['all']
+              capabilities: [gpu]
+    ports:
+      - "2122:22"
+      - "8888:8888"
+      - "8188:8188"
+    environment:
+      - PUBLIC_KEY=${PUBLIC_KEY}
+      #- JUPYTER_PASSWORD=12345
+    volumes:
+       - "${WORKSPACE_DIR}:/workspace"
+    networks:
+      gpu:
+networks:
+  gpu:
