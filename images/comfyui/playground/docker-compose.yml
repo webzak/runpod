@@ -1,0 +1,26 @@
+services:
+  gpu:
+    image: webzak/runpod:comfyui
+    build:
+      context: ..
+    container_name: comfyui
+    restart: always
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              device_ids: ['all']
+              capabilities: [gpu]
+    ports:
+      - "2122:22"
+      - "8888:8888"
+      - "8188:8188"
+    environment:
+      - PUBLIC_KEY=${PUBLIC_KEY}
+    volumes:
+       - "${WORKSPACE_DIR}:/workspace"
+    networks:
+      gpu:
+networks:
+  gpu:
